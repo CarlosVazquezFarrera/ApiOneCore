@@ -1,4 +1,7 @@
 using ApiOneCore.Infraestructure.Data;
+using ApiOneCore.Infraestructure.Repositories;
+using ApOneCore.Core.Interfaces;
+using ApOneCore.Core.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,6 +33,10 @@ namespace ApiOneCore
         {
             //AutoMapper
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            //Interfaces
+            services.AddTransient<ILoginService, LoginServices>();
+            services.AddTransient<ILoginRepository, LoginRepository>();
 
             services.AddControllers();
             //Agregamos la cadena de conextión

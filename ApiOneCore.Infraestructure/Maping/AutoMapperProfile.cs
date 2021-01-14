@@ -9,7 +9,8 @@ namespace ApiOneCore.Infraestructure.Maping
     {
         public AutoMapperProfile()
         {
-            CreateMap<Response<Usuario>, Response<UsuarioDTO>>();
+            CreateMap<Usuario, UsuarioDTO>();
+            CreateMap<UsuarioDTO, Usuario>();
         }
     }
 }
