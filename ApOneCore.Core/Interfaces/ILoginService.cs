@@ -7,7 +7,7 @@ namespace ApOneCore.Core.Interfaces
     public interface ILoginService
     {
         /// <summary>
-        /// Corrobora que el usuario exista en la base de datos y lo retorna si es así
+        /// Retorna el resultado que ha generado la base de datos
         /// </summary>
         /// <returns></returns>
         Task<Response<UsuarioDTO>> Login(UsuarioDTO usuario);

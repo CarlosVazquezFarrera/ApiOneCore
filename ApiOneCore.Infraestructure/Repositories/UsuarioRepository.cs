@@ -9,22 +9,27 @@ using System.Threading.Tasks;
 
 namespace ApiOneCore.Infraestructure.Repositories
 {
-    public class LoginRepository : ILoginRepository
+    public class UsuarioRepository : IUsuarioRepository
     {
-        public LoginRepository(OneCoreContext baseDeDatos)
+        #region Constructor
+        public UsuarioRepository(OneCoreContext baseDeDatos)
         {
             this.baseDeDatos = baseDeDatos;
         }
-        private readonly OneCoreContext baseDeDatos;
+        #endregion
 
-        public async Task<Response<Usuario>> Login(Usuario usuario)
+        #region Atributos
+        private readonly OneCoreContext baseDeDatos;
+        #endregion
+
+        #region Métodos
+        public async Task<SimpleResponse> AltaUsuario(Usuario usuario)
         {
-            Response<Usuario> responseRepository = new Response<Usuario>();
+            SimpleResponse simpleResponseAltaUsuario = new SimpleResponse();
+            await baseDeDatos.Database.OpenConnectionAsync();
+            var dbCommand = baseDeDatos.Database.GetDbConnection().CreateCommand();
             try
             {
-                await baseDeDatos.Database.OpenConnectionAsync();
-                var dbCommand = baseDeDatos.Database.GetDbConnection().CreateCommand();
-
                 #region Paramethers
 
                 DbParameter CorreoParameter = dbCommand.CreateParameter();
@@ -32,13 +37,23 @@ namespace ApiOneCore.Infraestructure.Repositories
                 CorreoParameter.Value = usuario.Correo;
                 dbCommand.Parameters.Add(CorreoParameter);
 
+                DbParameter NombreUsuarioParameter = dbCommand.CreateParameter();
+                NombreUsuarioParameter.ParameterName = "NombreUsuario";
+                NombreUsuarioParameter.Value = usuario.NombreUsuario;
+                dbCommand.Parameters.Add(NombreUsuarioParameter);
+
                 DbParameter passWordParameter = dbCommand.CreateParameter();
                 passWordParameter.ParameterName = "Password";
                 passWordParameter.Value = usuario.Password;
                 dbCommand.Parameters.Add(passWordParameter);
+
+                DbParameter SexoParameter = dbCommand.CreateParameter();
+                SexoParameter.ParameterName = "Sexo";
+                SexoParameter.Value = usuario.Sexo;
+                dbCommand.Parameters.Add(SexoParameter);
                 #endregion
 
-                dbCommand.CommandText = "[dbo].[LoginUsuario]";
+                dbCommand.CommandText = "[dbo].[IngresarUsuario]";
                 dbCommand.CommandType = System.Data.CommandType.StoredProcedure;
 
                 DbDataReader resultadoDb = await dbCommand.ExecuteReaderAsync();
@@ -46,30 +61,19 @@ namespace ApiOneCore.Infraestructure.Repositories
                 {
                     if (resultadoDb.Read())
                     {
-                        responseRepository.Exito = true;
-                        responseRepository.Data = new Usuario
-                        {
-                            Id = resultadoDb.GetGuid(0),
-                            Correo = resultadoDb.GetString(1),
-                            NombreUsuario = resultadoDb.GetString(2),
-                            Password = resultadoDb.GetString(3),
-                            Estatus = resultadoDb.GetBoolean(4),
-                            Sexo = resultadoDb.GetString(5),
-                            FechaCreacion = resultadoDb.GetDateTime(6)
-                        };
+                        simpleResponseAltaUsuario.Exito = resultadoDb.GetBoolean(0);
+                        simpleResponseAltaUsuario.Mensaje = resultadoDb.GetString(1);
                     }
                 }
-                else
-                {
-                    responseRepository.Mensaje = "Revise Usaurio y Contraseña";
-                }
+
             }
             catch (Exception ex)
             {
-                responseRepository.Mensaje = ex.ToString();
+                simpleResponseAltaUsuario.Mensaje = ex.ToString();
             }
             await baseDeDatos.Database.CloseConnectionAsync();
-            return responseRepository;
-        }
+            return simpleResponseAltaUsuario;
+        } 
+        #endregion
     }
 }

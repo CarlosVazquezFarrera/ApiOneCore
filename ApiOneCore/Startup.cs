@@ -5,17 +5,11 @@ using ApOneCore.Core.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ApiOneCore
 {
@@ -37,6 +31,9 @@ namespace ApiOneCore
             //Interfaces
             services.AddTransient<ILoginService, LoginServices>();
             services.AddTransient<ILoginRepository, LoginRepository>();
+
+            services.AddTransient<IUsuarioService, UsuarioService>();
+            services.AddTransient<IUsuarioRepository, UsuarioRepository>();
 
             services.AddControllers();
             //Agregamos la cadena de conextión

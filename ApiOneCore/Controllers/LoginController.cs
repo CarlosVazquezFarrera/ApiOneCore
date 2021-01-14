@@ -20,7 +20,14 @@ namespace ApiOneCore.Controllers
         private readonly ILoginService _loginService;
         #endregion 
 
+        /// <summary>
+        /// Método Login que consulta en la base de datos si el usuario existe o no
+        /// Si existe retorna su información
+        /// </summary>
+        /// <param name="usuario"></param>
+        /// <returns>IActionResult</returns>
         [HttpGet("Login")]
+
         public async Task<IActionResult> Login([FromBody] UsuarioDTO usuario)
         {
             try
@@ -30,7 +37,6 @@ namespace ApiOneCore.Controllers
             }
             catch (Exception)
             {
-
                 return BadRequest();
             }
         }
