@@ -2,6 +2,7 @@
 using ApOneCore.Core.DTOs;
 using ApOneCore.Core.Entites;
 using AutoMapper;
+using System.Collections.Generic;
 
 namespace ApiOneCore.Infraestructure.Maping
 {
@@ -11,6 +12,8 @@ namespace ApiOneCore.Infraestructure.Maping
         {
             CreateMap<Usuario, UsuarioDTO>();
             CreateMap<UsuarioDTO, Usuario>();
+            CreateMap<List<Usuario>, List<UsuarioDTO>>();
+            CreateMap<List<UsuarioDTO>, List<Usuario>>();
         }
     }
 }

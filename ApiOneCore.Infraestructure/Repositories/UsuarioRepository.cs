@@ -4,6 +4,7 @@ using ApOneCore.Core.Entites;
 using ApOneCore.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.Threading.Tasks;
 
@@ -185,6 +186,49 @@ namespace ApiOneCore.Infraestructure.Repositories
                 await baseDeDatos.Database.CloseConnectionAsync();
             }
             return simpleResponseActualizacionUsuario;
+        }
+        
+        /// <summary>
+        /// Obtiene los usuarios que se encuentran en la base de datos
+        /// </summary>
+        /// <returns></returns>
+        public async Task<Response<List<Usuario>>> ObtenerUsuarios()
+        {
+            Response<List<Usuario>> responseUsuarios = new Response<List<Usuario>>();
+            await baseDeDatos.Database.OpenConnectionAsync();
+            var dbCommand = baseDeDatos.Database.GetDbConnection().CreateCommand();
+            try
+            {
+                dbCommand.CommandText = "[dbo].[ConsutarUsuarios]";
+                dbCommand.CommandType = System.Data.CommandType.StoredProcedure;
+
+                DbDataReader resultadoDb = await dbCommand.ExecuteReaderAsync();
+                if (resultadoDb.HasRows)
+                {
+                    responseUsuarios.Data = new List<Usuario>();
+                    while (resultadoDb.Read())
+                    {
+                        responseUsuarios.Data.Add( new Usuario
+                        {
+                            Id = resultadoDb.GetGuid(0),
+                            Correo = resultadoDb.GetString(1),
+                            NombreUsuario = resultadoDb.GetString(2),
+                            Estatus = resultadoDb.GetBoolean(3),
+                            Sexo = resultadoDb.GetString(4)
+                        });
+                    }
+                    responseUsuarios.Exito = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                responseUsuarios.Mensaje = ex.ToString();
+            }
+            finally
+            {
+                await baseDeDatos.Database.CloseConnectionAsync();
+            }
+            return responseUsuarios;
         }
         #endregion
     }

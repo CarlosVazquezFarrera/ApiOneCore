@@ -1,6 +1,8 @@
 ﻿using ApOneCore.Core.CustomEntities;
+using ApOneCore.Core.DTOs;
 using ApOneCore.Core.Entites;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ApOneCore.Core.Interfaces
@@ -25,5 +27,10 @@ namespace ApOneCore.Core.Interfaces
         /// <param name="IdUsuario"></param>
         /// <returns></returns>
         Task<SimpleResponse> EliminarUsuario(Guid IdUsuario);
+        /// <summary>
+        /// Obtiene el listado de usuarios
+        /// </summary>
+        /// <returns></returns>
+        Task<Response<List<Usuario>>> ObtenerUsuarios();
     }
 }
