@@ -12,8 +12,6 @@ namespace ApiOneCore.Infraestructure.Maping
         {
             CreateMap<Usuario, UsuarioDTO>();
             CreateMap<UsuarioDTO, Usuario>();
-            CreateMap<List<Usuario>, List<UsuarioDTO>>();
-            CreateMap<List<UsuarioDTO>, List<Usuario>>();
         }
     }
 }

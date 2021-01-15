@@ -25,6 +25,11 @@ namespace ApOneCore.Core.Services
         #endregion
 
         #region Métodos
+        /// <summary>
+        /// Retorna la información del usuario Logeado si es que existe
+        /// </summary>
+        /// <param name="usuario"></param>
+        /// <returns></returns>
         public async Task<Response<UsuarioDTO>> Login(UsuarioDTO usuario)
         {
             var repositoryResponse = await _loginRepository.Login(_mapper.Map<Usuario>(usuario));
