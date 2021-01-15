@@ -2,6 +2,7 @@
 {
     using ApOneCore.Core.CustomEntities;
     using ApOneCore.Core.DTOs;
+    using System;
     using System.Threading.Tasks;
 
     public interface IUsuarioService
@@ -18,5 +19,11 @@
         /// <param name="usuario"></param>
         /// <returns></returns>
         Task<SimpleResponse> ActualizarUsuario(UsuarioDTO usuario);
+        /// <summary>
+        /// Retorna la información sobre la desactivación del usuario
+        /// </summary>
+        /// <param name="usuario"></param>
+        /// <returns></returns>
+        Task<SimpleResponse> EliminarUsuario(Guid IdUsuario);
     }
 }

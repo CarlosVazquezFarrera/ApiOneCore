@@ -1,5 +1,6 @@
 ﻿using ApOneCore.Core.CustomEntities;
 using ApOneCore.Core.Entites;
+using System;
 using System.Threading.Tasks;
 
 namespace ApOneCore.Core.Interfaces
@@ -18,5 +19,11 @@ namespace ApOneCore.Core.Interfaces
         /// <param name="usuario"></param>
         /// <returns></returns>
         Task<SimpleResponse> ActualizarUsuario(Usuario usuario);
+        /// <summary>
+        /// Hace la desactivación del usuario
+        /// </summary>
+        /// <param name="IdUsuario"></param>
+        /// <returns></returns>
+        Task<SimpleResponse> EliminarUsuario(Guid IdUsuario);
     }
 }

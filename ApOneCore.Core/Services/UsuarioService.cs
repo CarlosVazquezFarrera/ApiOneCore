@@ -40,6 +40,11 @@ namespace ApOneCore.Core.Services
         {
             return await _usuarioRepository.ActualizarUsuario(_mapper.Map<Usuario>(usuario));
         }
+
+        public async Task<SimpleResponse> EliminarUsuario(Guid IdUsuario)
+        {
+            return await _usuarioRepository.EliminarUsuario(IdUsuario);
+        }
         #endregion
     }
 }

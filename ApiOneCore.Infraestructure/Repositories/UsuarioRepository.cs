@@ -90,7 +90,7 @@ namespace ApiOneCore.Infraestructure.Repositories
         /// <returns></returns>
         public async Task<SimpleResponse> ActualizarUsuario(Usuario usuario)
         {
-            SimpleResponse simpleResponseAltaUsuario = new SimpleResponse();
+            SimpleResponse simpleResponseActualizacionUsuario = new SimpleResponse();
             await baseDeDatos.Database.OpenConnectionAsync();
             var dbCommand = baseDeDatos.Database.GetDbConnection().CreateCommand();
             try
@@ -131,21 +131,60 @@ namespace ApiOneCore.Infraestructure.Repositories
                 {
                     if (resultadoDb.Read())
                     {
-                        simpleResponseAltaUsuario.Exito = resultadoDb.GetBoolean(0);
-                        simpleResponseAltaUsuario.Mensaje = resultadoDb.GetString(1);
+                        simpleResponseActualizacionUsuario.Exito = resultadoDb.GetBoolean(0);
+                        simpleResponseActualizacionUsuario.Mensaje = resultadoDb.GetString(1);
                     }
                 }
-
             }
             catch (Exception ex)
             {
-                simpleResponseAltaUsuario.Mensaje = ex.ToString();
+                simpleResponseActualizacionUsuario.Mensaje = ex.ToString();
             }
             finally
             {
                 await baseDeDatos.Database.CloseConnectionAsync();
             }
-            return simpleResponseAltaUsuario;
+            return simpleResponseActualizacionUsuario;
+        }
+
+        public async Task<SimpleResponse> EliminarUsuario(Guid IdUsuario)
+        {
+            SimpleResponse simpleResponseActualizacionUsuario = new SimpleResponse();
+            await baseDeDatos.Database.OpenConnectionAsync();
+            var dbCommand = baseDeDatos.Database.GetDbConnection().CreateCommand();
+            try
+            {
+                #region Paramethers
+
+                DbParameter IdParameter = dbCommand.CreateParameter();
+                IdParameter.ParameterName = "Id";
+                IdParameter.Value = IdUsuario;
+                dbCommand.Parameters.Add(IdParameter);
+
+                #endregion
+
+                dbCommand.CommandText = "[dbo].[EliminarUsuario]";
+                dbCommand.CommandType = System.Data.CommandType.StoredProcedure;
+
+                DbDataReader resultadoDb = await dbCommand.ExecuteReaderAsync();
+                if (resultadoDb.HasRows)
+                {
+                    if (resultadoDb.Read())
+                    {
+                        simpleResponseActualizacionUsuario.Exito = resultadoDb.GetBoolean(0);
+                        simpleResponseActualizacionUsuario.Mensaje = resultadoDb.GetString(1);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                simpleResponseActualizacionUsuario.Mensaje = ex.ToString();
+            }
+            finally
+            {
+                await baseDeDatos.Database.CloseConnectionAsync();
+            }
+            return simpleResponseActualizacionUsuario;
         }
         #endregion
     }

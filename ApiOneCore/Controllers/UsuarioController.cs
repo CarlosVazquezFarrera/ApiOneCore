@@ -15,15 +15,56 @@ namespace ApiOneCore.Controllers
         {
             this._usuarioService = usuarioService;
         }
-
+        /// <summary>
+        /// Dat de lata a un usuario nuevo
+        /// </summary>
+        /// <param name="usuario"></param>
+        /// <returns></returns>
         [HttpPost("AltaUsuario")]
 
-        public async Task<IActionResult> Alta([FromBody] UsuarioDTO usuario)
+        public async Task<IActionResult> Alta(UsuarioDTO usuario)
         {
             try
             {
-                var ServiceResponse = await _usuarioService.AltaUsuario(usuario);
-                return Ok(ServiceResponse);
+                var serviceResponse = await _usuarioService.AltaUsuario(usuario);
+                return Ok(serviceResponse);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+        /// <summary>
+        /// Actualizar a un usuario que ya se encuentra en la base de datos
+        /// </summary>
+        /// <param name="usuario"></param>
+        /// <returns></returns>
+        [HttpPatch("ActualizarUsuario")]
+        public async Task<IActionResult> Actualizar(UsuarioDTO usuario)
+        {
+            try
+            {
+                var servicioResponse = await _usuarioService.ActualizarUsuario(usuario);
+                return Ok(servicioResponse);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+        
+        /// <summary>
+        /// Desactiva de la base de datos el usuario que se especifica en el ID
+        /// </summary>
+        /// <param name="IdUsuario"></param>
+        /// <returns></returns>
+        [HttpDelete("EliminarUsuario")]
+        public async Task<IActionResult> Eliminar([FromBody]Guid IdUsuario)
+        {
+            try
+            {
+                var servicivioResponse = await _usuarioService.EliminarUsuario(IdUsuario);
+                return Ok(servicivioResponse);
             }
             catch (Exception)
             {
@@ -31,18 +72,5 @@ namespace ApiOneCore.Controllers
             }
         }
 
-        [HttpPatch("ActualizarUsuario")]
-        public async Task<IActionResult> Actualizar([FromBody] UsuarioDTO usuario)
-        {
-            try
-            {
-                var ServicioResponse = await _usuarioService.ActualizarUsuario(usuario);
-                return Ok(ServicioResponse);
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
     }
 }
