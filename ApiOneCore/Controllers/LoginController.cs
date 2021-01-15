@@ -28,7 +28,7 @@ namespace ApiOneCore.Controllers
         /// <returns>IActionResult</returns>
         [HttpGet("Login")]
 
-        public async Task<IActionResult> Login([FromBody] UsuarioDTO usuario)
+        public async Task<IActionResult> Login([FromQuery] UsuarioDTO usuario)
         {
             try
             {
