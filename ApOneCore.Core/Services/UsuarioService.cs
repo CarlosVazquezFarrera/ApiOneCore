@@ -15,13 +15,13 @@ namespace ApOneCore.Core.Services
         #region Constructor
         public UsuarioService(IUsuarioRepository usuarioRepository, IMapper mapper)
         {
-            this._usuarioService = usuarioRepository;
+            this._usuarioRepository = usuarioRepository;
             this._mapper = mapper;
         } 
         #endregion
 
         #region Atributos
-        private readonly IUsuarioRepository _usuarioService;
+        private readonly IUsuarioRepository _usuarioRepository;
         private readonly IMapper _mapper;
         #endregion
 
@@ -33,8 +33,13 @@ namespace ApOneCore.Core.Services
         /// <returns></returns>
         public async Task<SimpleResponse> AltaUsuario(UsuarioDTO usuario)
         {
-            return await _usuarioService.AltaUsuario(_mapper.Map<Usuario>(usuario));
-        } 
+            return await _usuarioRepository.AltaUsuario(_mapper.Map<Usuario>(usuario));
+        }
+
+        public async Task<SimpleResponse> ActualizarUsuario(UsuarioDTO usuario)
+        {
+            return await _usuarioRepository.ActualizarUsuario(_mapper.Map<Usuario>(usuario));
+        }
         #endregion
     }
 }

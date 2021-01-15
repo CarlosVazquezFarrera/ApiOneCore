@@ -12,5 +12,11 @@ namespace ApOneCore.Core.Interfaces
         /// <param name="usuario"></param>
         /// <returns></returns>
         Task<SimpleResponse> AltaUsuario(Usuario usuario);
+        /// <summary>
+        /// Hace la actualización de la entidad especificada
+        /// </summary>
+        /// <param name="usuario"></param>
+        /// <returns></returns>
+        Task<SimpleResponse> ActualizarUsuario(Usuario usuario);
     }
 }

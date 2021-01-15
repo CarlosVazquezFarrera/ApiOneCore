@@ -30,5 +30,19 @@ namespace ApiOneCore.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpPatch("ActualizarUsuario")]
+        public async Task<IActionResult> Actualizar([FromBody] UsuarioDTO usuario)
+        {
+            try
+            {
+                var ServicioResponse = await _usuarioService.ActualizarUsuario(usuario);
+                return Ok(ServicioResponse);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
     }
 }
