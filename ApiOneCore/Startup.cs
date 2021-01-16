@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using System;
 
 namespace ApiOneCore
@@ -46,10 +47,15 @@ namespace ApiOneCore
             //Cors
             services.AddCors(o => o.AddPolicy(MyAllowSpecificOrigins, builder =>
             {
-                builder.WithOrigins("*")
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
+                builder.WithOrigins("http://localhost:4200")
+                       .WithMethods("http://localhost:4200")
+                       .WithHeaders("http://localhost:4200");
             }));
+
+            //Formaro Json
+            services.AddMvc().AddJsonOptions(options => {
+                 options.JsonSerializerOptions.IgnoreNullValues = true;
+             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
