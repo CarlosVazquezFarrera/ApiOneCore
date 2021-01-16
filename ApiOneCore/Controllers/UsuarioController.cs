@@ -68,7 +68,7 @@ namespace ApiOneCore.Controllers
         /// <param name="IdUsuario"></param>
         /// <returns></returns>
         [HttpDelete("EliminarUsuario")]
-        public async Task<IActionResult> Eliminar([FromBody] Guid IdUsuario)
+        public async Task<IActionResult> Eliminar([FromQuery] Guid IdUsuario)
         {
             try
             {
@@ -80,7 +80,10 @@ namespace ApiOneCore.Controllers
                 return BadRequest();
             }
         } 
-        
+        /// <summary>
+        /// Obtiene todos los usuarios de la base de datos
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("ObtenerUsuarios")]
         public async Task<IActionResult> ObtenerUsuarios()
         {

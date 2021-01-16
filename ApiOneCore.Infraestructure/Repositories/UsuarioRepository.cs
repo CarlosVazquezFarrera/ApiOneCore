@@ -57,6 +57,11 @@ namespace ApiOneCore.Infraestructure.Repositories
                 SexoParameter.ParameterName = "Sexo";
                 SexoParameter.Value = usuario.Sexo;
                 dbCommand.Parameters.Add(SexoParameter);
+
+                DbParameter EstadoParameter = dbCommand.CreateParameter();
+                EstadoParameter.ParameterName = "Estatus";
+                EstadoParameter.Value = usuario.Estatus;
+                dbCommand.Parameters.Add(EstadoParameter);
                 #endregion
 
                 dbCommand.CommandText = "[dbo].[IngresarUsuario]";

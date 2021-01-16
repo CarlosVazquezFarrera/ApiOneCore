@@ -48,11 +48,11 @@ namespace ApiOneCore
             services.AddCors(o => o.AddPolicy(MyAllowSpecificOrigins, builder =>
             {
                 builder.WithOrigins("http://localhost:4200")
-                       .WithMethods("http://localhost:4200")
-                       .WithHeaders("http://localhost:4200");
+                       .AllowAnyHeader()
+                       .AllowAnyMethod();
             }));
 
-            //Formaro Json
+            //Formato Json
             services.AddMvc().AddJsonOptions(options => {
                  options.JsonSerializerOptions.IgnoreNullValues = true;
              });
